@@ -207,8 +207,10 @@ def lookup_sheet_row_for_mission(sheets, email: str, contract_hint: str = '',
         product_keywords = ('миссия', 'миссии')
 
     # P = Телефон (WhatsApp). Range расширен до A:P, чтобы вытянуть phone.
+    # Без конечного номера строки: жёсткие пределы 300/500/600 уже
+    # неоднократно ломали доставку новых клиентов за пределами диапазона.
     res = sheets.spreadsheets().values().get(
-        spreadsheetId=SHEET_ID, range=f'{SHEET_TAB}!A1:P500',
+        spreadsheetId=SHEET_ID, range=f'{SHEET_TAB}!A:P',
     ).execute()
     rows = res.get('values', [])
     candidates = []
